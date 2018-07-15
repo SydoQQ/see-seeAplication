@@ -1,2 +1,2 @@
 # see-seeAplication
-see&amp;see Apliccation for adroid
+see&amp;see Apliccation for android
