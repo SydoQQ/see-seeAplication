@@ -42,6 +42,6 @@ public class GenerateNewLinePosition {
       public int generateTimeDelay()
       {
             int del=new Random().nextInt((3*Delay));
-            return (int)(del+(abs(newPosition-currentPosition)%10));
+            return (int)(del+(abs(newPosition-currentPosition)%new Random().nextInt(100)));
       }
 }
