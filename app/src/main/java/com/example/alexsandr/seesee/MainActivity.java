@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,11 +29,14 @@ public class MainActivity extends AppCompatActivity {
     GradientDrawable gradientBackDrawable;
     GenerateNewLinePosition generatorNewLinePosition;
     /*Default Settings*/
-    int changeStartAlphaTime=100;
-    float stepChangeStartAlpha=(float)0.05;
-    int defaulDelayChangeBackGroundGradientMKS=25000;
-    int defaultDelayChangeLinePosition=15;
-    int defaultDelayChangeLineColorNS=35000000;
+    private int changeStartAlphaTime=100;
+    private float stepChangeStartAlpha=(float)0.05;
+    private int defaulDelayChangeBackGroundGradientMKS=25000;
+    private int defaultDelayChangeLinePosition=15;
+    private int defaultDelayChangeLineColorNS=35000000;
+    private int numbArryaPos=100;
+    private int dis=10;
+    private static final String TAG = "myLogs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         mainBackGround.setBackgroundDrawable(gradientBackDrawable);
         Display display = getWindowManager().getDefaultDisplay();
         heightDisplay = display.getHeight();
-        generatorNewLinePosition=new GenerateNewLinePosition(heightDisplay);
+        generatorNewLinePosition=new GenerateNewLinePosition(heightDisplay,numbArryaPos,dis);
         currentLinePosition=heightDisplay/2;
 
         StartAnimationThread.start();
@@ -236,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
                 int newLinePosition=0;
                 int k=0;
                 newLinePosition=generatorNewLinePosition.generate(currentLinePosition);
+                Log.d(TAG,String.valueOf(newLinePosition));
                 defaultDelayChangeLinePosition=generatorNewLinePosition.generateTimeDelay();
                 if(currentLinePosition>newLinePosition)
                     k=-1;
