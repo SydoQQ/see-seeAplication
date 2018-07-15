@@ -30,9 +30,9 @@ public class MainActivity extends AppCompatActivity {
     /*Default Settings*/
     int changeStartAlphaTime=100;
     float stepChangeStartAlpha=(float)0.05;
-    int defaulDelayChangeBackGroundGradientMKS=15000;
+    int defaulDelayChangeBackGroundGradientMKS=25000;
     int defaultDelayChangeLinePosition=15;
-    int defaultDelayChangeLineColorNS=15000000;
+    int defaultDelayChangeLineColorNS=35000000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,35 +41,43 @@ public class MainActivity extends AppCompatActivity {
         Intent intent=getIntent();
         startColor=intent.getIntArrayExtra("StartColor");
         startAlpha=(float)(startColor[3]/100);
-        intent.getFloatExtra("AlphaStart",startAlpha);
         mLine=(LinearLayout)findViewById(R.id.mainLineLayout);
         mainBackGround=(ImageView)findViewById(R.id.mainBackGround);
         mImageView=(ImageView)findViewById(R.id.mainLine);
-        Display display = getWindowManager().getDefaultDisplay();
-        heightDisplay = display.getHeight();
-        generatorNewLinePosition=new GenerateNewLinePosition(heightDisplay);
-        currentLinePosition=heightDisplay/2;
-        mLine.setY(currentLinePosition);
         gradientC[0]=Color.rgb(startColor[0],startColor[1],startColor[2]);
         gradientC[1]=Color.rgb(startColor[0],startColor[1],startColor[2]);
         gradientBackDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, gradientC);
         mainBackGround.setBackgroundDrawable(gradientBackDrawable);
+        Display display = getWindowManager().getDefaultDisplay();
+        heightDisplay = display.getHeight();
+        generatorNewLinePosition=new GenerateNewLinePosition(heightDisplay);
+        currentLinePosition=heightDisplay/2;
+
+        StartAnimationThread.start();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         Toast toast = Toast.makeText(getApplicationContext(),
-                "Go!", Toast.LENGTH_LONG);
+                "Go!", Toast.LENGTH_SHORT);
         toast.show();
-        StartAnimationThread.start();
+        mLine.setY(currentLinePosition);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
         Toast toast = Toast.makeText(getApplicationContext(),
-                "Good Buy!", Toast.LENGTH_LONG);
+                "Good Buy!", Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Toast toast = Toast.makeText(getApplicationContext(),
+                "Go!", Toast.LENGTH_SHORT);
         toast.show();
     }
 
@@ -228,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
                 int newLinePosition=0;
                 int k=0;
                 newLinePosition=generatorNewLinePosition.generate(currentLinePosition);
+                defaultDelayChangeLinePosition=generatorNewLinePosition.generateTimeDelay();
                 if(currentLinePosition>newLinePosition)
                     k=-1;
                 else

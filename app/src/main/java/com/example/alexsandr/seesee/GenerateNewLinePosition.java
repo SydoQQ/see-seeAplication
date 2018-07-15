@@ -14,5 +14,5 @@ public class GenerateNewLinePosition {
       {
           return new Random().nextInt(maxValue);
       }
-      public int generateTimeDelay(){return 0;}
+      public int generateTimeDelay(){return 15;}
 }
