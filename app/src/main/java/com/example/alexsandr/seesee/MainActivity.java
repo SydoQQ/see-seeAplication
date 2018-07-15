@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         mainBackGround.setBackgroundDrawable(gradientBackDrawable);
         Display display = getWindowManager().getDefaultDisplay();
         heightDisplay = display.getHeight();
-        generatorNewLinePosition=new GenerateNewLinePosition(heightDisplay,numbArryaPos,dis);
+        generatorNewLinePosition=new GenerateNewLinePosition(heightDisplay,numbArryaPos,dis,defaultDelayChangeLinePosition);
         currentLinePosition=heightDisplay/2;
 
         StartAnimationThread.start();
@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
                 int newLinePosition=0;
                 int k=0;
                 newLinePosition=generatorNewLinePosition.generate(currentLinePosition);
-                Log.d(TAG,String.valueOf(newLinePosition));
+                Log.d(TAG,String.valueOf(currentLinePosition)+" "+String.valueOf(newLinePosition));
                 defaultDelayChangeLinePosition=generatorNewLinePosition.generateTimeDelay();
                 if(currentLinePosition>newLinePosition)
                     k=-1;
