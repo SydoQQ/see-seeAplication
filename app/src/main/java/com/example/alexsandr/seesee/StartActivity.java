@@ -18,7 +18,7 @@ public class StartActivity extends AppCompatActivity {
     ImageView imageView;
     Animation startAnimation;
     int color[]={0,0,0};
-    int Delay=0;
+    int Delay=3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +27,24 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.start_activity);
         for(int i=0;i<3;i++)
             color[i]= new Random().nextInt(256);
-        TextView textView= (TextView)findViewById(R.id.startactivity_textView);
-        imageView= (ImageView) findViewById(R.id.startactivity_ImageView);
+        TextView textView=(TextView)findViewById(R.id.startactivity_textView);
+        imageView=(ImageView) findViewById(R.id.startactivity_ImageView);
         textView.setTextColor(Color.rgb(256-color[0],256-color[1],256-color[2]));
         textView.setTypeface(type);
         imageView.setBackgroundColor(Color.rgb(color[0],color[1],color[2]));
         startAnimation=AnimationUtils.loadAnimation(this, R.anim.startactivity_animation);
         imageView.startAnimation(startAnimation);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        imageView.setBackgroundColor(Color.rgb(color[0],color[1],color[2]));
+        startAnimation=AnimationUtils.loadAnimation(this, R.anim.startactivity_animation);
+        imageView.startAnimation(startAnimation);
         ThreadStartMainActive.start();
     }
+
     public void delay() {
         try {
             TimeUnit.SECONDS.sleep(Delay);

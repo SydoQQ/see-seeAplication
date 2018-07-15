@@ -54,10 +54,23 @@ public class MainActivity extends AppCompatActivity {
         gradientC[1]=Color.rgb(startColor[0],startColor[1],startColor[2]);
         gradientBackDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, gradientC);
         mainBackGround.setBackgroundDrawable(gradientBackDrawable);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         Toast toast = Toast.makeText(getApplicationContext(),
                 "Go!", Toast.LENGTH_LONG);
         toast.show();
         StartAnimationThread.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast toast = Toast.makeText(getApplicationContext(),
+                "Good Buy!", Toast.LENGTH_LONG);
+        toast.show();
     }
 
     private void MICROSLEEP(int delay) {
