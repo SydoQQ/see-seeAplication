@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private int changeStartAlphaTime=100;
     private float stepChangeStartAlpha=(float)0.05;
     private int defaulDelayChangeBackGroundGradientMKS=25000;
-    private int defaultDelayChangeLinePosition=15;
+    private int defaultDelayChangeLinePosition=1;
     private int defaultDelayChangeLineColorNS=35000000;
     private int numbArryaPos=100;
     private int dis=10;
@@ -241,7 +241,8 @@ public class MainActivity extends AppCompatActivity {
                 int k=0;
                 newLinePosition=generatorNewLinePosition.generate(currentLinePosition);
                 Log.d(TAG,String.valueOf(currentLinePosition)+" "+String.valueOf(newLinePosition));
-                defaultDelayChangeLinePosition=generatorNewLinePosition.generateTimeDelay();
+                //newLinePosition=currentLinePosition;
+                //defaultDelayChangeLinePosition=generatorNewLinePosition.generateTimeDelay();
                 if(currentLinePosition>newLinePosition)
                     k=-1;
                 else
