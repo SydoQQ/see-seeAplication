@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
                 int k=0;
                 newLinePosition=generatorNewLinePosition.generate(currentLinePosition);
                 defaultDelayChangeLinePosition=generatorNewLinePosition.generateTimeDelay();
-                Log.d(TAG,String.valueOf(newLinePosition)+" "+String.valueOf(defaultDelayChangeLinePosition));
+                //Log.d(TAG,String.valueOf(newLinePosition)+" "+String.valueOf(defaultDelayChangeLinePosition));
                 if(currentLinePosition>newLinePosition)
                     k=-1;
                 else
