@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     int startColor[]={0,0,0,0};
     float startAlpha=0;
     int currentLinePosition=0;
+    int userPoint=0;
     int BackGroundColor[][]=new int[4][3];
     int LineColor[][]=new int[2][3];
     int gradientC[]=new int[2];
