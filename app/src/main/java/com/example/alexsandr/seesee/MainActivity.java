@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Display;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     int startColor[]={0,0,0,0};
     float startAlpha=0;
     int currentLinePosition=0;
-    int userPoint=0;
+    long userPoint=0;
     int BackGroundColor[][]=new int[4][3];
     int LineColor[][]=new int[2][3];
     int gradientC[]=new int[2];
@@ -57,7 +58,9 @@ public class MainActivity extends AppCompatActivity {
         heightDisplay = display.getHeight();
         generatorNewLinePosition=new GenerateNewLinePosition(heightDisplay,numbArryaPos,dis,defaultDelayChangeLinePosition);
         currentLinePosition=heightDisplay/2;
-
+        userPoint=Long.MAX_VALUE;
+        TextView text=(TextView)findViewById(R.id.pointView);
+        text.setText(String.valueOf(userPoint));
         StartAnimationThread.start();
     }
 
