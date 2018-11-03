@@ -3,6 +3,7 @@ package com.example.alexsandr.seesee;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private int changeStartAlphaTime=100;
     private float stepChangeStartAlpha=(float)0.05;
     private int defaulDelayChangeBackGroundGradientMKS=25000;
+    private long defaultDelayChBG=25;
     private int defaultDelayChangeLinePosition=10;
     private int defaultDelayChangeLineColorNS=35000000;
     private int numbArryaPos=100;
