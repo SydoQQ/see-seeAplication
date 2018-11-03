@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,17 +26,23 @@ public class MainActivity extends AppCompatActivity {
     int startColor[]={0,0,0,0};
     float startAlpha=0;
     int currentLinePosition=0;
-    long userPoint=0;
     int BackGroundColor[][]=new int[4][3];
     int LineColor[][]=new int[2][3];
     int gradientC[]=new int[2];
     GradientDrawable gradientBackDrawable;
     GenerateNewLinePosition generatorNewLinePosition;
+    private int timeKof[]={10,20,30};
+    private int indKof=0;
+    private float Kof=1;
+    private int DisAdd=1000;
+    long Point=0;
+    TextView pointView;
+    boolean running=true;
+    int seconds=0;
     /*Default Settings*/
     private int changeStartAlphaTime=100;
     private float stepChangeStartAlpha=(float)0.05;
     private int defaulDelayChangeBackGroundGradientMKS=25000;
-    private long defaultDelayChBG=25;
     private int defaultDelayChangeLinePosition=10;
     private int defaultDelayChangeLineColorNS=35000000;
     private int numbArryaPos=100;
@@ -60,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
         heightDisplay = display.getHeight();
         generatorNewLinePosition=new GenerateNewLinePosition(heightDisplay,numbArryaPos,dis,defaultDelayChangeLinePosition);
         currentLinePosition=heightDisplay/2;
-        userPoint=Long.MAX_VALUE;
-        TextView text=(TextView)findViewById(R.id.pointView);
-        text.setText(String.valueOf(userPoint));
         StartAnimationThread.start();
+        timerStart();
+        checkedTime();
+        AddPoint();
     }
 
     @Override
@@ -73,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 "Go!", Toast.LENGTH_SHORT);
         toast.show();
         mLine.setY(currentLinePosition);
+        running=true;
     }
 
     @Override
@@ -81,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(getApplicationContext(),
                 "Good Buy!", Toast.LENGTH_SHORT);
         toast.show();
+        running=false;
     }
 
     @Override
@@ -89,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(getApplicationContext(),
                 "Go!", Toast.LENGTH_SHORT);
         toast.show();
+        running=false;
     }
 
     private void MICROSLEEP(int delay) {
@@ -271,4 +281,82 @@ public class MainActivity extends AppCompatActivity {
 
         }
     });
+
+    protected void checkedKof(){
+        switch (indKof){
+            case 1: {Kof=(float)1/2; break;}
+            case 2: {Kof=(float)1/4; break;}
+            case 3: {Kof=-1;break;}
+        }
+    }
+
+    protected void checkedTime(){
+        final Handler handlerCheckedTime=new Handler();
+        handlerCheckedTime.post(new Runnable() {
+            @Override
+            public void run() {
+                if(indKof>2)
+                    indKof=2;
+                if(seconds>timeKof[indKof]) {
+                    indKof++;
+                    checkedKof();
+                }
+                handlerCheckedTime.postDelayed(this,1000);
+            }
+        });
+    }
+
+    protected void timerStart(){
+        final Handler handlerTimerView=new Handler();
+        handlerTimerView.post(new Runnable() {
+            @Override
+            public void run() {
+                if(running){
+                    seconds++;
+                }
+                handlerTimerView.postDelayed(this,1000);
+            }
+        });
+    }
+
+    protected void AddPoint(){
+        final TextView textView=(TextView)findViewById(R.id.pointView);
+        final Handler textViewhandler=new Handler();
+        Point=0;
+        String str=String.format("%019d", Point);
+        textView.setText(String.valueOf(str));
+        textViewhandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if(running){
+                    long add=new Random().nextInt(DisAdd);
+                    add*=Kof;
+                    Point+=add;
+                    //Log.d(TAG,String.valueOf(Point)+" "+String.valueOf(add));
+                    if(Point<0) {
+                        Point = 0;
+                        running=false;
+                    }
+                    else if(Point<Long.MIN_VALUE+(DisAdd*2)){
+                        Point = Long.MAX_VALUE;
+                        running=false;
+                    }
+                    String str=String.format("%019d", Point);
+                    textView.setText(str);
+                }
+                textViewhandler.postDelayed(this,1000);
+            }
+        });
+    }
+    public boolean onTouchEvent(MotionEvent e) {
+        seconds=0;
+        indKof--;
+        running=true;
+        if(indKof<0) {
+            indKof = 0;
+            Kof=1;
+        }
+        checkedKof();
+        return true;
+    }
 }
