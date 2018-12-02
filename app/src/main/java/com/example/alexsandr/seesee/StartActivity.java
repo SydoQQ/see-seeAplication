@@ -18,7 +18,7 @@ public class StartActivity extends AppCompatActivity {
     ImageView imageView;
     Animation startAnimation;
     int color[]={0,0,0};
-    int Delay=0;
+    int Delay=3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
