@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
+import javax.security.auth.Destroyable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,19 +38,28 @@ public class MainActivity extends AppCompatActivity {
     private int changeStartAlphaTime=100;
     private float stepChangeStartAlpha=(float)0.05;
     private static final String TAG = "myLogs";
+    TextView ExitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.menu_layout);
+        //setContentView(R.layout.activity_main);
         Intent intent=getIntent();
         startColor=intent.getIntArrayExtra("StartColor");
         startAlpha=(float)(startColor[3]/100);
-        backGroundGratientChange();
-        PointColorChange();
-        timerStart();
-        checkedTime();
-        AddPoint();
+        //backGroundGratientChange();
+        //PointColorChange();
+        //timerStart();
+        //checkedTime();
+        //AddPoint();
+        ExitButton=(TextView)findViewById(R.id.exitbutton);
+        ExitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private int colorGradient[][]=new int[2][3];
