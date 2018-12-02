@@ -2,6 +2,7 @@ package com.example.alexsandr.seesee;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Handler;
@@ -205,25 +206,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    Thread StartAnimationThread=new Thread(new Runnable() {
-        @Override
-        public void run() {
-            for(;;)
-            {
-                MILLISLEEP(changeStartAlphaTime);
-                mainBackGround.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mainBackGround.setAlpha(startAlpha);
-                    }
-                });
-                if(startAlpha==1.0)
-                    break;
-                startAlpha+=stepChangeStartAlpha;
-            }
-        }
-    });
-
     private int timeKof[]={10,20,30};
     private int indKof=0;
     private float Kof=1;
@@ -272,6 +254,8 @@ public class MainActivity extends AppCompatActivity {
 
     protected void AddPoint(){
         textView=(TextView)findViewById(R.id.pointView);
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/12046.ttf");
+        textView.setTypeface(type);
         final Handler textViewhandler=new Handler();
         Point=0;
         Add=0;
