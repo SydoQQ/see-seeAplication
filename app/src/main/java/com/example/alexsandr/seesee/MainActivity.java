@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
 
     ImageView mainBackGround;
+    TextView textView;
     private int startColor[]={0,0,0,0};
     private float startAlpha=0;
 
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         startColor=intent.getIntArrayExtra("StartColor");
         startAlpha=(float)(startColor[3]/100);
         backGroundGratientChange();
+        PointColorChange();
         timerStart();
         checkedTime();
         AddPoint();
@@ -114,6 +116,43 @@ public class MainActivity extends AppCompatActivity {
                 }
                 backGroundChangeHandler.postDelayed(this, TimeKofBackGround);
                 }
+        });
+    }
+
+    private int PointColor[]=new int[3];
+    private int II=0;
+    private int AddPointColor=0;
+    private int newPointColor=0;
+    private int KC=0;
+    private void PointColorChange (){
+        final Handler pointColorChange=new Handler();
+        for(int i=0;i<3;i++)
+            PointColor[i]=0;
+        newPointColor=new Random().nextInt(256);
+        KC=1;
+        pointColorChange.post(new Runnable() {
+            @Override
+            public void run() {
+                if(running){
+                    if(AddPointColor==newPointColor)
+                    {
+                        II++;
+                        if(II>2)
+                            II=0;
+                        newPointColor=new Random().nextInt(256);
+                        AddPointColor=0;
+                        if(newPointColor>PointColor[II])
+                            KC=1;
+                        else KC=-1;
+                    }
+                    AddPointColor++;
+                    PointColor[II]+=KC;
+                    if(PointColor[II]==255)
+                        AddPointColor=newPointColor;
+                    textView.setTextColor(Color.rgb(PointColor[0],PointColor[1],PointColor[2]));
+                }
+                pointColorChange.postDelayed(this,TimeKofBackGround);
+            }
         });
     }
 
@@ -232,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void AddPoint(){
-        final TextView textView=(TextView)findViewById(R.id.pointView);
+        textView=(TextView)findViewById(R.id.pointView);
         final Handler textViewhandler=new Handler();
         Point=0;
         Add=0;
